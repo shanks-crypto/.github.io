@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundación CIGETEC - Ciencias Gerenciales, Humanas y Tecnológicas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #1b5e20;
+            --secondary: #2e7d32;
+            --accent: #4caf50;
+            --light: #f1f8e9;
+            --dark: #1b1b1b;
+            --text: #333;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Barra lateral izquierda */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-logo {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-logo h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent);
+        }
+        
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left-color: var(--accent);
+        }
+        
+        .menu-item i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .menu-item span {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .sidebar-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 15px 25px;
+        }
+        
+        .sidebar-footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 101;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: margin-left 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+            animation: zoomInOut 20s infinite alternate ease-in-out;
+        }
+        
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
+        .logo-text {
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: var(--primary);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+            scroll-margin-top: 100px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+            animation: expandWidth 1s ease;
+        }
+        
+        @keyframes expandWidth {
+            from {
+                width: 0;
+            }
+            to {
+                width: 80px;
+            }
+        }
+        
+        /* Secciones principales */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .about-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            animation: slideInLeft 0.8s ease;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .about-section p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        /* Secciones específicas */
+        .donations-section, .scholarships-section, .mission-section, 
+        .values-section, .areas-section, .plan-section, 
+        .development-section, .contact-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            display: none;
+        }
+        
+        .donations-section.active, .scholarships-section.active, 
+        .mission-section.active, .values-section.active, 
+        .areas-section.active, .plan-section.active, 
+        .development-section.active, .contact-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        /* Estilos comunes para tarjetas */
+        .donation-options, .scholarship-options, .areas-grid, .development-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .donation-card, .scholarship-card, .area-card, .development-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+            border-top: 4px solid var(--accent);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .donation-card:hover, .scholarship-card:hover, 
+        .area-card:hover, .development-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .donation-card h3, .scholarship-card h3, 
+        .area-card h3, .development-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .donation-card p, .scholarship-card p, 
+        .area-card p, .development-card p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        /* Botones */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-donate {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+        }
+        
+        .btn-apply {
+            background: linear-gradient(135deg, #2196F3, #0D47A1);
+        }
+        
+        /* Acordeón de valores */
+        .accordion {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.4s;
+            border-left: 4px solid var(--accent);
+            animation: slideInRight 0.8s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .accordion:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .accordion-header {
+            padding: 18px 20px;
+            background-color: var(--accent);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: var(--secondary);
+        }
+        
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .accordion-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .accordion.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+        
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .accordion.active .accordion-content {
+            padding: 20px;
+            max-height: 600px;
+        }
+        
+        .accordion-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: transform 0.5s ease;
+        }
+        
+        /* Áreas de trabajo */
+        .area-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: transform 0.5s ease;
+        }
+        
+        .area-card:hover .area-image {
+            transform: scale(1.1);
+        }
+        
+        /* Plan de trabajo */
+        .plan-category {
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+        }
+        
+        .plan-category:hover {
+            transform: translateX(10px);
+        }
+        
+        .plan-category h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 5px;
+        }
+        
+        .plan-category ul {
+            padding-left: 20px;
+            color: var(--text);
+        }
+        
+        .plan-category li {
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-radius: 10px 10px 0 0;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .footer-logo-img {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .footer-info {
+            max-width: 600px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-5px) scale(1.2);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Imágenes animadas */
+        .animated-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .moving-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            animation: panImage 30s infinite linear;
+        }
+        
+        @keyframes panImage {
+            0% {
+                transform: scale(1) translateX(0);
+            }
+            25% {
+                transform: scale(1.1) translateX(5%);
+            }
+            50% {
+                transform: scale(1) translateX(0);
+            }
+            75% {
+                transform: scale(1.1) translateX(-5%);
+            }
+            100% {
+                transform: scale(1) translateX(0);
+            }
+        }
+        
+        /* Asistente virtual */
+        .assistant-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .assistant-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .assistant-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            animation: none;
+        }
+        
+        .assistant-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .assistant-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .assistant-header h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .assistant-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            animation: messageAppear 0.3s ease;
+        }
+        
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .assistant-message {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .assistant-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .assistant-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .assistant-input input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        
+        .assistant-input button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .assistant-input button:hover {
+            background: var(--secondary);
+            transform: rotate(15deg);
+        }
+        
+        .voice-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        
+        .voice-btn {
+            padding: 8px 15px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .voice-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .voice-btn.active {
+            background: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 15px;
+            background-color: #f0f0f0;
+            border-radius: 18px;
+            align-self: flex-start;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #888;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        /* Botón de volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .main-content.sidebar-active {
+                margin-left: var(--sidebar-width);
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .donation-options, .scholarship-options, 
+            .areas-grid, .development-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .assistant-window {
+                width: 300px;
+                height: 450px;
+                right: -10px;
+            }
+            
+            .back-to-top {
+                bottom: 80px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .assistant-window {
+                width: calc(100vw - 40px);
+                right: 10px;
+            }
+            
+            .back-to-top {
+                bottom: 70px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menú toggle para móviles -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Barra lateral izquierda -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h2>Fundación CIGETEC</h2>
+            <p>Menú de Navegación</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-target="inicio">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </div>
+            
+            <div class="menu-item" data-target="donaciones">
+                <i class="fas fa-hand-holding-heart"></i>
+                <span>Donaciones para la Fundación</span>
+            </div>
+            
+            <div class="menu-item" data-target="becas">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Becas</span>
+            </div>
+            
+            <div class="sidebar-divider"></div>
+            
+            <div class="menu-item" data-target="mision">
+                <i class="fas fa-bullseye"></i>
+                <span>Misión y Visión</span>
+            </div>
+            
+            <div class="menu-item" data-target="valores">
+                <i class="fas fa-star"></i>
+                <span>Nuestros Valores</span>
+            </div>
+            
+            <div class="menu-item" data-target="areas">
+                <i class="fas fa-briefcase"></i>
+                <span>Áreas de Trabajo</span>
+            </div>
+            
+            <div class="menu-item" data-target="plan">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Plan de Trabajo 2026</span>
+            </div>
+            
+            <div class="menu-item" data-target="desarrollo">
+                <i class="fas fa-users"></i>
+                <span>Desarrollo Integral</span>
+            </div>
+            
+            <div class="sidebar-divider"></div>
+            
+            <div class="menu-item" data-target="contacto">
+                <i class="fas fa-envelope"></i>
+                <span>Contacto</span>
+            </div>
+        </div>
+        
+        <div class="sidebar-footer">
+            <p>Fundación CIGETEC © 2025</p>
+            <p>Transformando la educación</p>
+        </div>
+    </aside>
+    
+    <!-- Contenido principal -->
+    <main class="main-content" id="mainContent">
+        <header>
+            <div class="header-bg"></div>
+            <div class="container header-content">
+                <div class="logo-container">
+                    <!-- LOGO PRINCIPAL - SVG REEMPLAZADO POR TU IMAGEN PNG -->
+                    <div class="logo">
+                        <img src="img/cigetec.png" alt="Logo Fundación CIGETEC">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Fundación CIGETEC</h1>
+                        <p class="subtitle">Fundación de Ciencias Gerenciales, Humanas y Tecnológicas</p>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <span><i class="fas fa-map-marker-alt"></i> Calle B, entre Av. Páez y Repúblicas, Quinta Gisele, El Pinar, Urb. el Paraíso, Caracas</span>
+                    <span><i class="fas fa-envelope"></i> fundacioncigetec@gmail.com</span>
+                    <span><i class="fas fa-phone"></i> 414.2718259</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <!-- Sección de Inicio -->
+            <section id="inicio-section" class="content-section active">
+                <div class="animated-image">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Educación y Tecnología" class="moving-image">
+                </div>
+                
+                <section class="about-section">
+                    <h2 class="section-title">¿Quiénes Somos?</h2>
+                    <p>La Fundación de Ciencias Gerenciales, Humanísticas y Tecnológicas (Cigetec) es una institución sin fines de lucro constituida en junio de 2019, que está dedicada al fortalecimiento educativo de la nación integrada por un equipo multidisciplinario.</p>
+                    
+                    <div class="animated-image" style="height: 250px;">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Equipo multidisciplinario" class="moving-image">
+                    </div>
+                    
+                    <h3 class="section-title">Nuestra Misión</h3>
+                    <p>Generar investigación científica, tecnológica y asistencia integral al docente, estudiantes y comunidad educativa en general, por medio de proyectos educativos, de la mano de un equipo multidisciplinario, en búsqueda de la calidad educativa en el país.</p>
+                    
+                    <h3 class="section-title">Nuestra Visión</h3>
+                    <p>Ser una Fundación de referencia nacional e internacional que desarrolle investigación, formación e innovación educativa para desarrollar integralmente a la sociedad fortaleciendo a un nuevo ser asistido por la ciencia y tecnología.</p>
+                </section>
+                
+                <div style="text-align: center; margin: 40px 0;">
+                    <h3>Explora nuestras secciones principales</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 20px;">
+                        <button class="btn" onclick="showSection('donaciones')">
+                            <i class="fas fa-hand-holding-heart"></i> Donaciones
+                        </button>
+                        <button class="btn" onclick="showSection('becas')">
+                            <i class="fas fa-graduation-cap"></i> Becas
+                        </button>
+                        <button class="btn" onclick="showSection('areas')">
+                            <i class="fas fa-briefcase"></i> Áreas de Trabajo
+                        </button>
+                        <button class="btn" onclick="showSection('plan')">
+                            <i class="fas fa-calendar-alt"></i> Plan 2026
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Donaciones -->
+            <section id="donaciones-section" class="donations-section">
+                <h2 class="section-title">Donaciones para la Fundación</h2>
+                
+                <div class="animated-image" style="height: 250px;">
+                    <img src="img/donate.png" alt="Donaciones y apoyo" class="moving-image">
+                </div>
+                
+                <p>Tu contribución nos permite continuar con nuestra labor de fortalecimiento educativo, investigación científica y asistencia integral a docentes y estudiantes. Cada donación, sin importar su tamaño, marca una diferencia significativa en la vida de quienes más lo necesitan.</p>
+                
+                <div class="donation-options">
+                    <div class="donation-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Donación Educativa</h3>
+                        <p>Apoya nuestros programas de formación docente, materiales educativos y recursos para escuelas en comunidades vulnerables.</p>
+                        <p><strong>Impacto:</strong> Con $50 podemos proveer materiales educativos a 10 estudiantes.</p>
+                        <a href="#" class="btn btn-donate">Donar Ahora</a>
+                    </div>
+                    
+                    <div class="donation-card">
+                        <h3><i class="fas fa-flask"></i> Donación Tecnológica</h3>
+                        <p>Contribuye a nuestro programa de Ciencia y Tecnología para equipar laboratorios y talleres de robótica en escuelas públicas.</p>
+                        <p><strong>Impacto:</strong> Con $200 podemos adquirir un kit básico de robótica para una escuela.</p>
+                        <a href="#" class="btn btn-donate">Donar Ahora</a>
+                    </div>
+                    
+                    <div class="donation-card">
+                        <h3><i class="fas fa-heartbeat"></i> Donación para Salud Escolar</h3>
+                        <p>Ayuda a mejorar las condiciones de salud y nutrición de estudiantes en situación de vulnerabilidad.</p>
+                        <p><strong>Impacto:</strong> Con $30 podemos proveer un mes de suplementos nutricionales a un niño.</p>
+                        <a href="#" class="btn btn-donate">Donar Ahora</a>
+                    </div>
+                    
+                    <div class="donation-card">
+                        <h3><i class="fas fa-hand-holding-usd"></i> Donación General</h3>
+                        <p>Tu donación será destinada a donde más se necesite dentro de nuestros diversos programas educativos y de desarrollo.</p>
+                        <p><strong>Impacto:</strong> Cada contribución nos acerca a cumplir nuestros objetivos.</p>
+                        <a href="#" class="btn btn-donate">Donar Ahora</a>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; background-color: #e8f5e9; padding: 20px; border-radius: 8px;">
+                    <h3><i class="fas fa-info-circle"></i> Información para Donaciones</h3>
+                    <p><strong>Cuenta Bancaria:</strong> Banco Venezolano de Crédito</p>
+                    <p><strong>Número de Cuenta:</strong> 0104-XXXX-XXXX-XXXX-XXXX</p>
+                    <p><strong>Titular:</strong> Fundación CIGETEC</p>
+                    <p><strong>RIF:</strong> J-412980963</p>
+                    <p><strong>Transferencias Internacionales:</strong> Disponibles - Contáctenos para más información</p>
+                    <p><strong>Nota:</strong> Todas las donaciones son deducibles de impuestos según la ley venezolana.</p>
+                </div>
+            </section>
+            
+            <!-- Sección de Becas -->
+            <section id="becas-section" class="scholarships-section">
+                <h2 class="section-title">Programa de Becas</h2>
+                
+                <div class="animated-image" style="height: 250px;">
+                    <img src="img/gorro.png" alt="Estudiantes becados" class="moving-image">
+                </div>
+                
+                <p>En la Fundación CIGETEC creemos en el poder transformador de la educación. Nuestro programa de becas está diseñado para apoyar a estudiantes talentosos que enfrentan barreras económicas para continuar sus estudios.</p>
+                
+                <div class="scholarship-options">
+                    <div class="scholarship-card">
+                        <h3><i class="fas fa-user-graduate"></i> Beca de Excelencia Académica</h3>
+                        <p>Dirigida a estudiantes con promedios destacados que demuestren compromiso con su desarrollo educativo y comunitario.</p>
+                        <p><strong>Cobertura:</strong> 100% de matrícula + materiales educativos</p>
+                        <p><strong>Requisitos:</strong> Promedio mínimo de 18/20, carta de recomendación, situación económica vulnerable</p>
+                        <a href="#" class="btn btn-apply">Aplicar Ahora</a>
+                    </div>
+                    
+                    <div class="scholarship-card">
+                        <h3><i class="fas fa-laptop-code"></i> Beca en Tecnología e Innovación</h3>
+                        <p>Para estudiantes interesados en carreras tecnológicas, robótica, programación e inteligencia artificial.</p>
+                        <p><strong>Cobertura:</strong> 80% de matrícula + equipo tecnológico básico</p>
+                        <p><strong>Requisitos:</strong> Interés demostrado en tecnología, proyecto innovador, situación económica vulnerable</p>
+                        <a href="#" class="btn btn-apply">Aplicar Ahora</a>
+                    </div>
+                    
+                    <div class="scholarship-card">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> Beca para Formación Docente</h3>
+                        <p>Apoyo para educadores que deseen especializarse en metodologías innovadoras y educación STEM.</p>
+                        <p><strong>Cobertura:</strong> 100% de cursos de especialización + materiales</p>
+                        <p><strong>Requisitos:</strong> Ser docente activo, carta de la institución educativa, compromiso de replicar conocimientos</p>
+                        <a href="#" class="btn btn-apply">Aplicar Ahora</a>
+                    </div>
+                    
+                    <div class="scholarship-card">
+                        <h3><i class="fas fa-users"></i> Beca de Desarrollo Integral</h3>
+                        <p>Para participantes en nuestros programas de desarrollo de los seis cuerpos (físico, emocional, energético, astral, mental, espiritual).</p>
+                        <p><strong>Cobertura:</strong> Acceso completo a talleres y formación especializada</p>
+                        <p><strong>Requisitos:</strong> Compromiso con el proceso de desarrollo personal, situación económica vulnerable</p>
+                        <a href="#" class="btn btn-apply">Aplicar Ahora</a>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; background-color: #e3f2fd; padding: 20px; border-radius: 8px;">
+                    <h3><i class="fas fa-calendar-alt"></i> Proceso de Aplicación</h3>
+                    <ol>
+                        <li><strong>Revisión de requisitos:</strong> Verifica que cumples con los requisitos de la beca de tu interés</li>
+                        <li><strong>Pre-inscripción:</strong> Completa el formulario en línea disponible en cada beca</li>
+                        <li><strong>Documentación:</strong> Envía los documentos solicitados (cédula, récord académico, carta de recomendación, etc.)</li>
+                        <li><strong>Entrevista:</strong> Si tu aplicación es preseleccionada, serás contactado para una entrevista</li>
+                        <li><strong>Selección:</strong> El comité de becas evaluará todas las aplicaciones y notificará a los seleccionados</li>
+                        <li><strong>Formalización:</strong> Firma de convenio de beca y inicio del programa</li>
+                    </ol>
+                    <p><strong>Fechas importantes:</strong> Las convocatorias están abiertas permanentemente. La selección se realiza trimestralmente.</p>
+                </div>
+            </section>
+            
+            <!-- Sección de Misión y Visión -->
+            <section id="mision-section" class="mission-section">
+                <h2 class="section-title">Misión y Visión</h2>
+                
+                <div class="animated-image" style="height: 250px;">
+                    <img src="img/mision vision.png" alt="Misión y Visión" class="moving-image">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+                    <div class="about-section">
+                        <h3 class="section-title">Nuestra Misión</h3>
+                        <p>Generar investigación científica, tecnológica y asistencia integral al docente, estudiantes y comunidad educativa en general, por medio de proyectos educativos, de la mano de un equipo multidisciplinario, en búsqueda de la calidad educativa en el país.</p>
+                        <p>Nos enfocamos en:</p>
+                        <ul>
+                            <li>Desarrollo de investigación aplicada en ciencias gerenciales, humanísticas y tecnológicas</li>
+                            <li>Formación y capacitación continua de docentes y estudiantes</li>
+                            <li>Implementación de proyectos educativos innovadores</li>
+                            <li>Fortalecimiento del sistema educativo nacional</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3 class="section-title">Nuestra Visión</h3>
+                        <p>Ser una Fundación de referencia nacional e internacional que desarrolle investigación, formación e innovación educativa para desarrollar integralmente a la sociedad fortaleciendo a un nuevo ser asistido por la ciencia y tecnología.</p>
+                        <p>Nuestros objetivos estratégicos:</p>
+                        <ul>
+                            <li>Convertirnos en referente latinoamericano en innovación educativa</li>
+                            <li>Impactar positivamente en el desarrollo integral de las comunidades</li>
+                            <li>Establecer alianzas estratégicas con instituciones nacionales e internacionales</li>
+                            <li>Promover la transformación educativa mediante la ciencia y tecnología</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Valores -->
+            <section id="valores-section" class="values-section">
+                <h2 class="section-title">Nuestros Valores</h2>
+                
+                <div class="animated-image" style="height: 300px;">
+                    <img src="img/gemini2.png" alt="Valores institucionales" class="moving-image">
+                </div>
+                
+                <p style="text-align: center; margin: 20px 0 30px; font-size: 1.1rem;">
+                    Nuestros valores fundamentales guían cada una de nuestras acciones y decisiones, asegurando coherencia y excelencia en todo lo que hacemos.
+                </p>
+                
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-hands-helping"></i> Vocación de Servicio</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="animated-image">
+                            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Vocación de Servicio" class="moving-image">
+                        </div>
+                        <p>En la Fundación CIGETEC, entendemos que nuestro propósito fundamental es servir a la comunidad educativa y a la sociedad en general. Nuestra vocación de servicio se manifiesta en cada proyecto, iniciativa y acción que emprendemos, siempre con el objetivo de contribuir al desarrollo integral de las personas y al fortalecimiento del sistema educativo nacional.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-users"></i> Trabajo en Equipo</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="animated-image">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Trabajo en Equipo" class="moving-image">
+                        </div>
+                        <p>Creemos firmemente en el poder de la colaboración. Fomentamos un ambiente donde cada miembro del equipo contribuye con sus habilidades y perspectivas únicas para alcanzar objetivos comunes. La sinergia que resulta del trabajo en equipo nos permite lograr resultados que superan las capacidades individuales.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-graduation-cap"></i> Formación Constante</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="animated-image">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Formación Constante" class="moving-image">
+                        </div>
+                        <p>Reconocemos que el aprendizaje es un proceso continuo. Promovemos la actualización permanente de conocimientos y habilidades, tanto en nuestro equipo como en las comunidades que servimos. La formación constante nos permite adaptarnos a los cambios y mantenernos a la vanguardia en nuestras áreas de trabajo.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <h3><i class="fas fa-handshake"></i> Compromiso</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="animated-image">
+                            <img src="img/compromiso.png" alt="Compromiso" class="moving-image">
+                        </div>
+                        <p>Nuestro compromiso es inquebrantable. Nos dedicamos por completo a nuestra misión, cumpliendo con nuestras responsabilidades y manteniendo siempre los más altos estándares de calidad en todo lo que hacemos. Este compromiso se refleja en la consistencia y perseverancia con la que abordamos cada desafío.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Áreas de Trabajo -->
+            <section id="areas-section" class="areas-section">
+                <h2 class="section-title">Nuestras Áreas de Trabajo</h2>
+                
+                <div class="animated-image" style="height: 250px;">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Áreas de trabajo" class="moving-image">
+                </div>
+                
+                <p style="text-align: center; margin-bottom: 30px;">
+                    Desarrollamos programas integrales que abordan diferentes aspectos del desarrollo educativo y humano, siempre con un enfoque innovador y transformador.
+                </p>
+                
+                <div class="areas-grid">
+                    <div class="area-card">
+                        <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Turismo Escolar" class="area-image">
+                        <div class="area-content">
+                            <h3>Turismo Escolar</h3>
+                            <p>Desarrollamos programas que integran el turismo con la educación, permitiendo a los estudiantes aprender a través de experiencias directas con el patrimonio cultural, histórico y natural de nuestro país.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="area-card">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ciencia, Tecnología e Innovación Educativa" class="area-image">
+                        <div class="area-content">
+                            <h3>Ciencia, Tecnología e Innovación Educativa</h3>
+                            <p>Promovemos el pensamiento científico y la apropiación de tecnologías en los procesos educativos, preparando a los estudiantes para los desafíos del siglo XXI.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="area-card">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Educación" class="area-image">
+                        <div class="area-content">
+                            <h3>Educación</h3>
+                            <p>Implementamos iniciativas que fortalecen los procesos de enseñanza-aprendizaje, la formación docente y la gestión educativa, con enfoques innovadores y pertinentes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="area-card">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Salud y Nutrición Escolar" class="area-image">
+                        <div class="area-content">
+                            <h3>Salud y Nutrición Escolar</h3>
+                            <p>Trabajamos para mejorar las condiciones de salud y nutrición de los estudiantes, reconociendo su impacto directo en el rendimiento académico y el desarrollo integral.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="area-card">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Deporte y Recreación Educativa" class="area-image">
+                        <div class="area-content">
+                            <h3>Deporte y Recreación Educativa</h3>
+                            <p>Fomentamos la práctica deportiva y actividades recreativas como herramientas para el desarrollo de habilidades socioemocionales, valores y hábitos de vida saludable.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Plan de Trabajo 2026 -->
+            <section id="plan-section" class="plan-section">
+                <h2 class="section-title">Plan de Trabajo 2026</h2>
+                
+                <div class="animated-image" style="height: 200px;">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Plan de Trabajo" class="moving-image">
+                </div>
+                
+                <p style="text-align: center; margin-bottom: 30px;">
+                    Nuestro plan estratégico para el año 2026 se centra en tres ejes fundamentales que nos permitirán maximizar nuestro impacto en la comunidad educativa.
+                </p>
+                
+                <div class="plan-category">
+                    <h3><i class="fas fa-book-open"></i> EDUCACIÓN</h3>
+                    <ul>
+                        <li>Formación de 5000 maestras de Educación Inicial en Ciencia y Tecnología</li>
+                        <li>Programa Cocineritos</li>
+                        <li>Pequeños Científicos</li>
+                        <li>Turismo Escolar</li>
+                        <li>Prevención de enfermedades, Nutrición y seguridad escolar</li>
+                    </ul>
+                </div>
+                
+                <div class="plan-category">
+                    <h3><i class="fas fa-flask"></i> CIENCIA Y TECNOLOGÍA</h3>
+                    <ul>
+                        <li>Formación en Robótica</li>
+                        <li>Inteligencia Artificial</li>
+                        <li>Pizarras Digitales Interactivas</li>
+                        <li>Paneles Solares</li>
+                    </ul>
+                </div>
+                
+                <div class="plan-category">
+                    <h3><i class="fas fa-user-graduate"></i> DESARROLLO INTEGRAL</h3>
+                    <ul>
+                        <li>Formación de las Maestras, Estudiantes y Comunidad Educativa en general en los Seis Cuerpos</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Sección de Desarrollo Integral -->
+            <section id="desarrollo-section" class="development-section">
+                <h2 class="section-title">Desarrollo Integral - Los Seis Cuerpos</h2>
+                
+                <div class="animated-image" style="height: 250px;">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Desarrollo Integral" class="moving-image">
+                </div>
+                
+                <p style="text-align: center; margin-bottom: 30px;">
+                    Nuestro enfoque holístico del desarrollo humano se basa en el trabajo equilibrado de los seis cuerpos que conforman al ser humano.
+                </p>
+                
+                <div class="development-grid">
+                    <div class="development-card">
+                        <h3><i class="fas fa-running"></i> Cuerpo 1: Físico</h3>
+                        <p>Es la parte del cuerpo que se puede tocar, las actividades sugeridas para su desarrollo son:</p>
+                        <ul>
+                            <li>Nutrición y Dietética</li>
+                            <li>Yoga, Taichi, Gimnasia</li>
+                            <li>Acupuntura, Reflexología</li>
+                            <li>Masajes terapéuticos</li>
+                            <li>Entre otros</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="development-card">
+                        <h3><i class="fas fa-smile"></i> Cuerpo 2: Emocional</h3>
+                        <p>En este cuerpo está contemplado el manejo de las emociones; algunos cursos sugeridos son:</p>
+                        <ul>
+                            <li>Inteligencia Emocional</li>
+                            <li>Taller de pareja</li>
+                            <li>Escuela para padres</li>
+                            <li>Terapias de Crecimiento personal</li>
+                            <li>Orientación familiar con casos en TEA</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="development-card">
+                        <h3><i class="fas fa-bolt"></i> Cuerpo 3: Energético</h3>
+                        <p>Se entiende en el nivel del manejo de las energías, para su desarrollo se tiene visualizado:</p>
+                        <ul>
+                            <li>Reiki, Kundalini</li>
+                            <li>Terapias de agua</li>
+                            <li>Terapias del Gon</li>
+                            <li>Sanación de Chakras</li>
+                            <li>Meditación, aromaterapia</li>
+                            <li>Método Yuen</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="development-card">
+                        <h3><i class="fas fa-star"></i> Cuerpo 4: Astral</h3>
+                        <p>En este cuerpo de desarrollo se contempla una serie de talleres:</p>
+                        <ul>
+                            <li>Sanación y cirugías Astrales</li>
+                            <li>Regresión de vidas pasadas</li>
+                            <li>Sueños lúcidos</li>
+                            <li>Viajes astrales</li>
+                            <li>Astrología y Cartas Astrales</li>
+                            <li>Entre otros</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="development-card">
+                        <h3><i class="fas fa-brain"></i> Cuerpo 5: Mental</h3>
+                        <p>En este cuerpo se trabajará todo lo necesario para eliminar programas instaurados y fortalecer la creencia en sí mismo.</p>
+                        <ul>
+                            <li>Programas de desarrollo mental</li>
+                            <li>Técnicas de reprogramación mental</li>
+                            <li>Fortalecimiento de la autoestima</li>
+                            <li>Desarrollo del pensamiento crítico</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="development-card">
+                        <h3><i class="fas fa-dove"></i> Cuerpo 6: Espiritual</h3>
+                        <p>En este nivel de desarrollo no se contempla la formación religiosa, sino el desarrollo integral del ser:</p>
+                        <ul>
+                            <li>Canalización Espiritual</li>
+                            <li>Sanación angelical</li>
+                            <li>Canalización con guías espirituales</li>
+                            <li>Entre otros</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Contacto -->
+            <section id="contacto-section" class="contact-section">
+                <h2 class="section-title">Contacto</h2>
+                
+                <div class="animated-image" style="height: 200px;">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Contacto" class="moving-image">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px;">
+                    <div>
+                        <h3><i class="fas fa-map-marker-alt"></i> Ubicación</h3>
+                        <p><strong>Dirección:</strong><br>
+                        Calle B, entre Av. Páez y Repúblicas,<br>
+                        Quinta Gisele, El Pinar,<br>
+                        Urb. el Paraíso, Caracas</p>
+                        
+                        <h3 style="margin-top: 30px;"><i class="fas fa-phone"></i> Teléfonos</h3>
+                        <p><strong>Teléfono principal:</strong> 414.2718259</p>
+                        
+                        <h3 style="margin-top: 30px;"><i class="fas fa-envelope"></i> Correo Electrónico</h3>
+                        <p><strong>Email:</strong> fundacioncigetec@gmail.com</p>
+                    </div>
+                    
+                    <div>
+                        <h3><i class="fas fa-id-card"></i> Información Legal</h3>
+                        <p><strong>RIF:</strong> J-412980963</p>
+                        <p><strong>Constituida:</strong> 08 de Julio de 2019</p>
+                        <p><strong>Presidente:</strong> Igle Abello</p>
+                        
+                        <h3 style="margin-top: 30px;"><i class="fas fa-share-alt"></i> Redes Sociales</h3>
+                        <div class="social-icons" style="justify-content: flex-start; margin-top: 10px;">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/fundacioncigetec" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; background-color: #e8f5e9; padding: 25px; border-radius: 8px;">
+                    <h3><i class="fas fa-clock"></i> Horarios de Atención</h3>
+                    <p><strong>Lunes a Viernes:</strong> 8:00 AM - 5:00 PM</p>
+                    <p><strong>Sábados:</strong> 9:00 AM - 1:00 PM (solo para citas programadas)</p>
+                    <p><strong>Domingos:</strong> Cerrado</p>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="container footer-content">
+                <div class="footer-logo">
+                    <!-- LOGO DEL FOOTER - TAMBIÉN REEMPLAZADO -->
+                    <div class="footer-logo-img">
+                        <img src="img/cigetec.png" alt="Logo CIGETEC" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+                    </div>
+                    <span>Fundación CIGETEC</span>
+                </div>
+                
+                <div class="footer-info">
+                    <p>Transformando la educación mediante la ciencia, la tecnología y el desarrollo humano integral.</p>
+                    <p>Constituida el 08 de Julio de 2019 - RIF: J-412980963</p>
+                </div>
+                
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/fundacioncigetec" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Fundación CIGETEC. Todos los derechos reservados.</p>
+                    <p>Calle B, entre Av. Páez y Repúblicas, Quinta Gisele, El Pinar, Urb. el Paraíso, Caracas</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+    
+    <!-- Botón de volver arriba -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
+    <!-- Asistente virtual -->
+    <div class="assistant-container">
+        <button class="assistant-btn" id="assistantBtn">
+            <i class="fas fa-robot"></i>
+        </button>
+        
+        <div class="assistant-window" id="assistantWindow">
+            <div class="assistant-header">
+                <h3><i class="fas fa-robot"></i> Asistente CIGETEC</h3>
+                <button class="close-btn" id="closeAssistant">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="assistant-messages" id="assistantMessages">
+                <!-- Los mensajes se agregarán aquí -->
+            </div>
+            
+            <div class="assistant-input">
+                <input type="text" id="messageInput" placeholder="Escribe tu pregunta aquí...">
+                <button id="sendMessage">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            
+            <div class="voice-controls">
+                <button class="voice-btn" id="startVoice">
+                    <i class="fas fa-microphone"></i> Hablar
+                </button>
+                <button class="voice-btn" id="stopVoice" disabled>
+                    <i class="fas fa-stop"></i> Detener
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // JavaScript para la funcionalidad de la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variables globales
+            const menuItems = document.querySelectorAll('.menu-item');
+            const sections = document.querySelectorAll('.content-section, .donations-section, .scholarships-section, .mission-section, .values-section, .areas-section, .plan-section, .development-section, .contact-section');
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const backToTopBtn = document.getElementById('backToTop');
+            const assistantBtn = document.getElementById('assistantBtn');
+            const assistantWindow = document.getElementById('assistantWindow');
+            const closeAssistant = document.getElementById('closeAssistant');
+            const sendMessageBtn = document.getElementById('sendMessage');
+            const messageInput = document.getElementById('messageInput');
+            const assistantMessages = document.getElementById('assistantMessages');
+            const startVoiceBtn = document.getElementById('startVoice');
+            const stopVoiceBtn = document.getElementById('stopVoice');
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            // Variable para el reconocimiento de voz
+            let recognition = null;
+            let isListening = false;
+            
+            // 1. Navegación entre secciones
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remover clase active de todos los items del menú
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Agregar clase active al item clickeado
+                    this.classList.add('active');
+                    
+                    // Obtener el target de la sección
+                    const target = this.getAttribute('data-target');
+                    
+                    // Ocultar todas las secciones
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Mostrar la sección correspondiente
+                    const targetSection = document.getElementById(target + '-section');
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                    
+                    // Cerrar sidebar en móviles
+                    if (window.innerWidth <= 1024) {
+                        sidebar.classList.remove('active');
+                        mainContent.classList.remove('sidebar-active');
+                    }
+                    
+                    // Scroll suave hacia arriba de la sección
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // 2. Alternar menú en móviles
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                mainContent.classList.toggle('sidebar-active');
+            });
+            
+            // 3. Cerrar sidebar al hacer clic fuera en móviles
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 1024) {
+                    const isClickInsideSidebar = sidebar.contains(event.target);
+                    const isClickOnToggle = menuToggle.contains(event.target);
+                    
+                    if (!isClickInsideSidebar && !isClickOnToggle && sidebar.classList.contains('active')) {
+                        sidebar.classList.remove('active');
+                        mainContent.classList.remove('sidebar-active');
+                    }
+                }
+            });
+            
+            // 4. Función para mostrar sección (para botones en la sección de inicio)
+            window.showSection = function(sectionId) {
+                // Remover clase active de todos los items del menú
+                menuItems.forEach(i => i.classList.remove('active'));
+                
+                // Agregar clase active al item correspondiente
+                const menuItem = document.querySelector(`.menu-item[data-target="${sectionId}"]`);
+                if (menuItem) {
+                    menuItem.classList.add('active');
+                }
+                
+                // Ocultar todas las secciones
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Mostrar la sección correspondiente
+                const targetSection = document.getElementById(sectionId + '-section');
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll suave hacia arriba
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            };
+            
+            // 5. Funcionalidad de acordeón (valores)
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const accordion = this.parentElement;
+                    accordion.classList.toggle('active');
+                    
+                    // Cambiar icono
+                    const icon = this.querySelector('.accordion-icon');
+                    if (accordion.classList.contains('active')) {
+                        icon.textContent = '−';
+                    } else {
+                        icon.textContent = '+';
+                    }
+                });
+            });
+            
+            // 6. Botón "Volver arriba"
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 7. Asistente virtual
+            // Toggle del asistente
+            assistantBtn.addEventListener('click', function() {
+                assistantWindow.style.display = assistantWindow.style.display === 'flex' ? 'none' : 'flex';
+                if (assistantWindow.style.display === 'flex') {
+                    messageInput.focus();
+                    addAssistantMessage('¡Hola! Soy el asistente virtual de la Fundación CIGETEC. ¿En qué puedo ayudarte hoy?');
+                }
+            });
+            
+            // Cerrar asistente
+            closeAssistant.addEventListener('click', function() {
+                assistantWindow.style.display = 'none';
+            });
+            
+            // Enviar mensaje
+            sendMessageBtn.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message) {
+                    addUserMessage(message);
+                    messageInput.value = '';
+                    
+                    // Mostrar indicador de escritura
+                    showTypingIndicator();
+                    
+                    // Respuesta automática después de un delay
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        getAssistantResponse(message);
+                    }, 1000);
+                }
+            }
+            
+            function addUserMessage(text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message';
+                messageDiv.textContent = text;
+                assistantMessages.appendChild(messageDiv);
+                assistantMessages.scrollTop = assistantMessages.scrollHeight;
+            }
+            
+            function addAssistantMessage(text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message assistant-message';
+                messageDiv.textContent = text;
+                assistantMessages.appendChild(messageDiv);
+                assistantMessages.scrollTop = assistantMessages.scrollHeight;
+            }
+            
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.id = 'typingIndicator';
+                typingDiv.innerHTML = `
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                `;
+                assistantMessages.appendChild(typingDiv);
+                assistantMessages.scrollTop = assistantMessages.scrollHeight;
+            }
+            
+            function removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            function getAssistantResponse(userMessage) {
+                const message = userMessage.toLowerCase();
+                let response = '';
+                
+                // Respuestas predefinidas
+                if (message.includes('hola') || message.includes('buenos días') || message.includes('buenas tardes')) {
+                    response = '¡Hola! Bienvenido a la Fundación CIGETEC. ¿Cómo puedo ayudarte hoy? Puedo brindarte información sobre donaciones, becas, programas educativos y más.';
+                } else if (message.includes('donación') || message.includes('donar') || message.includes('apoyar')) {
+                    response = 'Para realizar donaciones puedes hacer transferencias bancarias al Banco Venezolano de Crédito. Todas las donaciones son deducibles de impuestos. También puedes contactarnos directamente para más información.';
+                } else if (message.includes('beca') || message.includes('estudiar') || message.includes('ayuda económica')) {
+                    response = 'Ofrecemos varios tipos de becas: de excelencia académica, en tecnología e innovación, para formación docente y de desarrollo integral. Las convocatorias están abiertas permanentemente.';
+                } else if (message.includes('contacto') || message.includes('teléfono') || message.includes('correo')) {
+                    response = 'Puedes contactarnos al 414.2718259 o al correo fundacioncigetec@gmail.com. Nuestra dirección es Calle B, entre Av. Páez y Repúblicas, Quinta Gisele, El Pinar, Urb. el Paraíso, Caracas.';
+                } else if (message.includes('misión') || message.includes('visión') || message.includes('valores')) {
+                    response = 'Nuestra misión es generar investigación científica y asistencia integral a la comunidad educativa. Nuestra visión es ser referencia nacional e internacional en innovación educativa.';
+                } else if (message.includes('programa') || message.includes('talleres') || message.includes('cursos')) {
+                    response = 'Ofrecemos programas en: Turismo Escolar, Ciencia y Tecnología, Educación, Salud y Nutrición, Deporte y Recreación, y Desarrollo Integral de los seis cuerpos.';
+                } else if (message.includes('horario') || message.includes('atender') || message.includes('abierto')) {
+                    response = 'Atendemos de lunes a viernes de 8:00 AM a 5:00 PM, y sábados de 9:00 AM a 1:00 PM solo con cita previa.';
+                } else if (message.includes('gracias') || message.includes('adiós') || message.includes('chao')) {
+                    response = '¡Gracias a ti por contactarnos! Si tienes más preguntas, no dudes en escribir. ¡Que tengas un excelente día!';
+                } else {
+                    response = 'Gracias por tu mensaje. Si tienes preguntas específicas sobre donaciones, becas, programas educativos o cualquier otro tema relacionado con nuestra fundación, no dudes en preguntar.';
+                }
+                
+                addAssistantMessage(response);
+            }
+            
+            // 8. Reconocimiento de voz (funcionalidad opcional)
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                
+                startVoiceBtn.addEventListener('click', function() {
+                    if (!isListening) {
+                        recognition.start();
+                        startVoiceBtn.classList.add('active');
+                        stopVoiceBtn.disabled = false;
+                        isListening = true;
+                        addAssistantMessage('Escuchando... habla ahora.');
+                    }
+                });
+                
+                stopVoiceBtn.addEventListener('click', function() {
+                    if (isListening) {
+                        recognition.stop();
+                        startVoiceBtn.classList.remove('active');
+                        stopVoiceBtn.disabled = true;
+                        isListening = false;
+                        addAssistantMessage('Escucha detenida.');
+                    }
+                });
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    messageInput.value = transcript;
+                    sendMessage();
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('Error en reconocimiento de voz:', event.error);
+                    addAssistantMessage('Lo siento, hubo un error con el reconocimiento de voz.');
+                };
+                
+                recognition.onend = function() {
+                    startVoiceBtn.classList.remove('active');
+                    stopVoiceBtn.disabled = true;
+                    isListening = false;
+                };
+            } else {
+                // Si el navegador no soporta reconocimiento de voz, ocultar los botones
+                startVoiceBtn.style.display = 'none';
+                stopVoiceBtn.style.display = 'none';
+            }
+            
+            // 9. Ajustar imágenes animadas en móviles
+            function adjustImagesForMobile() {
+                const movingImages = document.querySelectorAll('.moving-image');
+                if (window.innerWidth <= 768) {
+                    movingImages.forEach(img => {
+                        img.style.animation = 'panImage 60s infinite linear';
+                    });
+                } else {
+                    movingImages.forEach(img => {
+                        img.style.animation = 'panImage 30s infinite linear';
+                    });
+                }
+            }
+            
+            // Ajustar imágenes al cargar y al redimensionar
+            adjustImagesForMobile();
+            window.addEventListener('resize', adjustImagesForMobile);
+            
+            // 10. Añadir efecto de carga suave a las imágenes
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                    this.style.transition = 'opacity 0.5s ease';
+                });
+                // Establecer opacidad inicial
+                img.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html>
